@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <form method="post">
+            A =  <input type="text" name="inputA" size="30"><br>
+            <select name="operator">
+                <option value="1">+</option>
+                <option value="2">-</option>
+                <option value="3">*</option>
+                <option value="4">/</option>
+            </select>
+            B =  <input type="number" name="inputB" size="30"><br>
+            <input type="submit" value="=">
+        </form>
+        <table>
+            <tr>
+                <th>A</th>
+                <th>+-*/</th>
+                <th>B</th>
+                <th>=</th>
+                <th>Time</th>
+            </tr>
+            <% users.forEach(function(user) {%>
+            <tr>
+                <td><%= user.A        %></td>
+                <td><%= user.operator %></td>
+                <td><%= user.B        %></td>
+                <td><%= user.answer   %></td>
+                <td><%= user.time     %></td>
+            </tr>
+            <% }) %>
+            </table>
+    </body>
+</html>
+
