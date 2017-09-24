@@ -3,6 +3,10 @@
     <head>
         <title><%= title %></title>
         <link rel='stylesheet' href='/stylesheets/style.css' />
+        <style>
+            table{border: 3px solid black;}
+            td{border: 1px dotted black;}
+        </style>
     </head>
     <body>
         <h1><%= title %></h1>
@@ -17,13 +21,13 @@
             B =  <input type="text" name="inputB" size="30"><br>
             <input type="submit" value="=">
         </form>
-        <table>
+        <table style="width:100%">
             <tr>
-                <th>A</th>
-                <th>+-*/</th>
-                <th>B</th>
-                <th>=</th>
-                <th>Time</th>
+                <th width="20%">A</th>
+                <th width="20%">+-*/</th>
+                <th width="20%">B</th>
+                <th width="20%">=</th>
+                <th width="20%">Time</th>
             </tr>
             <% users.forEach(function(user) {%>
             <tr>
