@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
-var DB_CONN_STR = 'mongodb://localhost:27017/JHBoard';
+var DB_CONN_STR = 'mongodb://localhost:27017/BoardDB3';
 
 var insertData = function(dbUrl, username, content)
 {

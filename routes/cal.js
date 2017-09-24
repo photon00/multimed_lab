@@ -11,10 +11,16 @@ var insertData = function(dbUrl, inputA, operator, inputB)
         var answer;
         if (isNaN(Number(inputA)) || isNaN(Number(inputB))) answer = 'err';
         else {
-            if (operator == 1) { operator = '+'; answer = String(inputA+inputB);}
-            else if (operator == 2) { operator = '-'; answer = String(inputA-inputB);}
-            else if (operator == 3) { operator = '*'; answer = String(inputA*inputB);}
-            else {operator = '/'; answer = String(inputA/inputB);}
+            var a = Number(a);
+            var b = Number(b);
+            if (operator == 1) { operator = '+'; answer = String(a+b);}
+            else if (operator == 2) { operator = '-'; answer = String(a-b);}
+            else if (operator == 3) { operator = '*'; answer = String(a*b);}
+            else { 
+                operator = '/';
+                if (b != 0) answer = String(a/b);
+                else answer = 'err';
+            }
         }   
         var data = [{'A':inputA,
                      'operator':operator,
@@ -50,7 +56,7 @@ router.get('/', function(req, res, next) {
 /* POST insert data. */
 router.post('/', function(req, res) {
         inputA = req.body.inputA;
-        //operator  = req.body.txtContent;
+        operator  = req.body.operator;
         inputB = req.body.inputB;
         insertData(DB_CONN_STR, inputA, operator, inputB);
         selectData(DB_CONN_STR, function(result){
