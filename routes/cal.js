@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
-var DB_CONN_STR = 'mongodb://localhost:27017/JHCal';
+var DB_CONN_STR = 'mongodb://localhost:27017/BoardDB3';
 
 var insertData = function(dbUrl, inputA, operator, inputB)
 {
@@ -11,8 +11,8 @@ var insertData = function(dbUrl, inputA, operator, inputB)
         var answer;
         if (isNaN(Number(inputA)) || isNaN(Number(inputB))) answer = 'err';
         else {
-            var a = Number(a);
-            var b = Number(b);
+            var a = Number(inputA);
+            var b = Number(inputB);
             if (operator == 1) { operator = '+'; answer = String(a+b);}
             else if (operator == 2) { operator = '-'; answer = String(a-b);}
             else if (operator == 3) { operator = '*'; answer = String(a*b);}
@@ -56,7 +56,7 @@ router.get('/', function(req, res, next) {
 /* POST insert data. */
 router.post('/', function(req, res) {
         inputA = req.body.inputA;
-        operator  = req.body.operator;
+        operator = req.body.operator;
         inputB = req.body.inputB;
         insertData(DB_CONN_STR, inputA, operator, inputB);
         selectData(DB_CONN_STR, function(result){
