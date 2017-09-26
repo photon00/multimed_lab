@@ -13,14 +13,14 @@ var ConstructNum = function (str) {
     let signIndex =  FindNotNumIndex(str, 0);
     let signIndex2;
     if (signIndex == 0) {
-        if (!str[signIndex].equals('+') || !str[signIndex].equals('-')) {console.log('%');return NaN;}
+        if (str[signIndex] != '+' || str[signIndex] != '-') {console.log('%');return NaN;}
         signIndex2 = FindNotNumIndex(str,1);
     }
     else  signIndex2 = signIndex;
-    if (!equals(str[signIndex2],'+') || equals(str[signIndex2],'-')){console.log(str[signIndex2]); return NaN;}
+    if (str[signIndex2]!='+' || str[signIndex2]!='-'){console.log(str[signIndex2]); return NaN;}
     else {
         let lastletter = FindNotNumIndex(str,signIndex2+1);
-        if (lastletter != str.length || (!str[lastletter].equals('i') && !str[lastletter].equals('j')))
+        if (lastletter != str.length || (str[lastletter]!='i' && str[lastletter] != 'j'))
         {console.log('@'); return NaN;}
         let num1 = Number(str.slice(0,signIndex2));
         let num2 = Number(str.slice(signIndex2,lastletter));
