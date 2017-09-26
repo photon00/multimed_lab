@@ -11,18 +11,24 @@ var FindNotNumIndex = function (str, index) {
 }
 var ConstructNum = function (str) {
     let signIndex =  FindNotNumIndex(str, 0);
-    if (signIndex == 0) if (str[signIndex] != '+' || str[signIndex] != '-') return NaN;
+    let signIndex2;
+    if (signIndex == 0) {
+        if (!str[signIndex].equals('+') || !str[signIndex].equals('-')) {console.log('%');return NaN;}
+        signIndex2 = FindNotNumIndex(str,1);
+    }
+    else  signIndex2 = signIndex;
+    if (!equals(str[signIndex2],'+') || equals(str[signIndex2],'-')){console.log(str[signIndex2]); return NaN;}
     else {
-        let signIndex2 = FindNotNumIndex(str,1);
-        if (str[signIndex2] != '+' || str[signIndex2] != '-') return NaN;
+        let lastletter = FindNotNumIndex(str,signIndex2+1);
+        if (lastletter != str.length || (!str[lastletter].equals('i') && !str[lastletter].equals('j')))
+        {console.log('@'); return NaN;}
+        let num1 = Number(str.slice(0,signIndex2));
+        let num2 = Number(str.slice(signIndex2,lastletter));
+        if (isNaN(num1) || isNaN(num2)){console.log('#'); return NaN;}
         else {
-            let lastletter = FindNotNumIndex(str,signIndex2+1);
-            if (lastletter != str.length || (str[lastletter] != 'i' && str[lastletter] != 'j'))
-                return NaN;
-            let num1 = Number(str.slice(0,signIndex2));
-            let num2 = Number(str.slice(signIndex2,lastletter));
-            if (isNaN(num1) || isNaN(num2)) return NaN;
-            else return [num1, num2];
+            console.log(`num1 = ${num1}`);
+            console.log(`num2 = ${num2}`);
+            return [num1, num2];
         }
     }
 }
@@ -35,7 +41,7 @@ var insertData = function(dbUrl, mode, inputA, operator, inputB)
         var answer;
         switch(mode)
         {
-            case 1:
+            case "1":
                 if (isNaN(Number(inputA)) || isNaN(Number(inputB))) answer = 'err';
                 else {
                     var a = Number(inputA);
@@ -50,7 +56,8 @@ var insertData = function(dbUrl, mode, inputA, operator, inputB)
                     }
                 } break;
 
-            case 2:
+            case "2":
+                console.log('get in Constnum func');
                 var A = ConstructNum(inputA);
                 var B = ConstructNum(inputB);
                 if (isNaN(A) || isNaN(B)) answer = 'err';
@@ -59,6 +66,7 @@ var insertData = function(dbUrl, mode, inputA, operator, inputB)
                     let b = A[1];
                     let c = B[0];
                     let d = B[1];
+                    console.log(`abcd = ${[a,b,c,d]}`);
                     if (operator == 1) { 
                         operator = '+';
                         if (b+d < 0) answer = String(a+c)+'-'+String(-b-d)+'i';
@@ -87,7 +95,7 @@ var insertData = function(dbUrl, mode, inputA, operator, inputB)
                             else answer = String(x)+'+'+String(y)+'i';
                         }
                     }
-                }
+                } break;
         }
         var data = [{'A':inputA,
                      'operator':operator,
@@ -97,7 +105,7 @@ var insertData = function(dbUrl, mode, inputA, operator, inputB)
         console.log('Insert Data: ' + inputA + operator + inputB + '=' + answer);
         collection.insert(data);
         db.close()
-    };
+    });
 }
 
 var selectData = function(dbUrl, callback)
@@ -126,6 +134,7 @@ router.post('/', function(req, res) {
         inputA = req.body.inputA;
         operator = req.body.operator;
         inputB = req.body.inputB;
+        console.log([mode,inputA,operator,inputB]);
         insertData(DB_CONN_STR, mode, inputA, operator, inputB);
         selectData(DB_CONN_STR, function(result){
             res.render('cal', { title: 'Nmlab Calculator',
