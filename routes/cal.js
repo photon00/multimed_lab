@@ -13,18 +13,17 @@ var ConstructNum = function (str) {
     let signIndex =  FindNotNumIndex(str, 0);
     let signIndex2;
     if (signIndex == 0) {
-        if (str[signIndex] != '+' || str[signIndex] != '-') {console.log('%');return NaN;}
+        if (str[signIndex] != '+' && str[signIndex] != '-') return 0;
         signIndex2 = FindNotNumIndex(str,1);
     }
     else  signIndex2 = signIndex;
-    if (str[signIndex2]!='+' || str[signIndex2]!='-'){console.log(str[signIndex2]); return NaN;}
+    if (str[signIndex2]!='+' && str[signIndex2]!='-'){console.log(str[signIndex2]); return 0;}
     else {
         let lastletter = FindNotNumIndex(str,signIndex2+1);
-        if (lastletter != str.length || (str[lastletter]!='i' && str[lastletter] != 'j'))
-        {console.log('@'); return NaN;}
+        if (lastletter+1 != str.length || (str[lastletter]!='i' && str[lastletter] != 'j')) return 0;
         let num1 = Number(str.slice(0,signIndex2));
         let num2 = Number(str.slice(signIndex2,lastletter));
-        if (isNaN(num1) || isNaN(num2)){console.log('#'); return NaN;}
+        if (isNaN(num1) || isNaN(num2)) return 0;
         else {
             console.log(`num1 = ${num1}`);
             console.log(`num2 = ${num2}`);
@@ -60,7 +59,7 @@ var insertData = function(dbUrl, mode, inputA, operator, inputB)
                 console.log('get in Constnum func');
                 var A = ConstructNum(inputA);
                 var B = ConstructNum(inputB);
-                if (isNaN(A) || isNaN(B)) answer = 'err';
+                if (A == 0 || B == 0) {console.log('!'); answer = 'err';}
                 else {
                     let a = A[0];
                     let b = A[1];
