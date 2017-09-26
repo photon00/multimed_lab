@@ -24,11 +24,8 @@ var ConstructNum = function (str) {
         let num1 = Number(str.slice(0,signIndex2));
         let num2 = Number(str.slice(signIndex2,lastletter));
         if (isNaN(num1) || isNaN(num2)) return 0;
-        else {
-            console.log(`num1 = ${num1}`);
-            console.log(`num2 = ${num2}`);
-            return [num1, num2];
-        }
+        else return [num1, num2];
+        
     }
 }
 
@@ -40,32 +37,15 @@ var insertData = function(dbUrl, mode, inputA, operator, inputB)
         var answer;
         switch(mode)
         {
-            case "1":
-                if (isNaN(Number(inputA)) || isNaN(Number(inputB))) answer = 'err';
-                else {
-                    var a = Number(inputA);
-                    var b = Number(inputB);
-                    if (operator == 1) { operator = '+'; answer = String(a+b);}
-                    else if (operator == 2) { operator = '-'; answer = String(a-b);}
-                    else if (operator == 3) { operator = '*'; answer = String(a*b);}
-                    else { 
-                        operator = '/';
-                        if (b != 0) answer = String(a/b);
-                        else answer = 'err';
-                    }
-                } break;
-
             case "2":
-                console.log('get in Constnum func');
                 var A = ConstructNum(inputA);
                 var B = ConstructNum(inputB);
-                if (A == 0 || B == 0) {console.log('!'); answer = 'err';}
+                if (A == 0 || B == 0) answer = 'err';
                 else {
                     let a = A[0];
                     let b = A[1];
                     let c = B[0];
                     let d = B[1];
-                    console.log(`abcd = ${[a,b,c,d]}`);
                     if (operator == 1) { 
                         operator = '+';
                         if (b+d < 0) answer = String(a+c)+'-'+String(-b-d)+'i';
@@ -93,6 +73,23 @@ var insertData = function(dbUrl, mode, inputA, operator, inputB)
                             if (y<0) answer = String(x)+'-'+String(-y)+'i';
                             else answer = String(x)+'+'+String(y)+'i';
                         }
+                    }
+                } break;
+
+                case "1":
+                default:
+
+                if (isNaN(Number(inputA)) || isNaN(Number(inputB))) answer = 'err';
+                else {
+                    var a = Number(inputA);
+                    var b = Number(inputB);
+                    if (operator == 1) { operator = '+'; answer = String(a+b);}
+                    else if (operator == 2) { operator = '-'; answer = String(a-b);}
+                    else if (operator == 3) { operator = '*'; answer = String(a*b);}
+                    else { 
+                        operator = '/';
+                        if (b != 0) answer = String(a/b);
+                        else answer = 'err';
                     }
                 } break;
         }
