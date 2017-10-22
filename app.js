@@ -29,7 +29,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/board',board);
 app.use('/cal',cal);
-app.use('/chat_test');
+app.use('/chat_test',chat_test);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
